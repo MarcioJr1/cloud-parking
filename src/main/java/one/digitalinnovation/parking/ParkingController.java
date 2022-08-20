@@ -1,19 +1,16 @@
-package one.digitalinnovation.parking.controller;
+package one.digitalinnovation.parking;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import one.digitalinnovation.parking.controller.dto.ParkingCreateDTO;
-import one.digitalinnovation.parking.controller.dto.ParkingDTO;
-import one.digitalinnovation.parking.controller.mapper.ParkingMapper;
+import one.digitalinnovation.parking.dto.ParkingCreateDTO;
+import one.digitalinnovation.parking.dto.ParkingDTO;
+import one.digitalinnovation.parking.mapper.ParkingMapper;
 import one.digitalinnovation.parking.model.Parking;
 import one.digitalinnovation.parking.service.ParkingService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -39,7 +36,7 @@ public class ParkingController {
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("{/id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ParkingDTO> findById(@PathVariable String id) {
 
         Parking parking = parkingService.findById(id);
@@ -47,7 +44,7 @@ public class ParkingController {
         return ResponseEntity.ok(result);
     }
 
-    @DeleteMapping("{/id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity delete(@PathVariable String id) {
         parkingService.delete(id);
         return ResponseEntity.noContent().build();
@@ -61,15 +58,15 @@ public class ParkingController {
         return ResponseEntity.status(HttpStatus.CREATED).body(result);
     }
 
-    @PutMapping("{/id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ParkingDTO> update(@PathVariable String id, @RequestBody ParkingCreateDTO dto) {
         Parking parkingUpdate = parkingMapper.toParkingCreate(dto);
         Parking parking = parkingService.update(id, parkingUpdate);
         return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
     }
-    @PostMapping("{/id}")
-    public ResponseEntity<ParkingDTO> exit(@PathVariable String id) {
-        Parking parking = parkingService.exit(id);
+    @PostMapping("/{id}")
+    public ResponseEntity<ParkingDTO> checkOut(@PathVariable String id) {
+        Parking parking = parkingService.checkOut(id);
         return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
     }
 }

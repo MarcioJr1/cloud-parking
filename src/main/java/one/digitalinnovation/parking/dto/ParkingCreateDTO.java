@@ -1,4 +1,4 @@
-package one.digitalinnovation.parking.controller.dto;
+package one.digitalinnovation.parking.dto;
 
 public class ParkingCreateDTO {
     private String license;
